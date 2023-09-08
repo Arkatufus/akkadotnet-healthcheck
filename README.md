@@ -103,6 +103,19 @@ using var host = new HostBuilder()
 await host.RunAsync();
 ```
 
+### Configuring Persistence Liveness Probe Interval
+
+To change the persistence liveness probe interval, configure the health check options:
+```csharp
+// Add Akka.HealthCheck
+builder.WithHealthCheck(options =>
+{
+    options.AddProviders(HealthCheckType.All);
+    // change the persistence liveness probe interval to 5 seconds
+    options.Liveness.PersistenceProbeInterval = TimeSpan.FromSeconds(5);
+});
+```
+
 `HealthCheckType` is a bit flag enum that consists of these choices:
 ```csharp
 [Flags]
